@@ -55,7 +55,7 @@ async function run() {
 
         app.get('/service', async (req, res) => {
             const query = {}
-            const cursor = serviceCollection.find(query).limit(3)
+            const cursor = serviceCollection.find(query).sort({ $natural: -1 }).limit(3)
             const services = await cursor.toArray();
             res.send(services);
         })
@@ -71,11 +71,11 @@ async function run() {
         //     const service = await serviceCollection.findOne(query)
         //     res.send(service);
         // })
-        // app.post('/orders', async (req, res) => {
-        //     const order = req.body;
-        //     const result = await orderCollection.insertOne(order);
-        //     res.send(result);
-        // })
+        app.post('/services', async (req, res) => {
+            const service = req.body;
+            const result = await serviceCollection.insertOne(service);
+            res.send(result);
+        })
         // app.get('/orders', verifyJWT, async (req, res) => {
         //     const decoded = req.decoded;
         //     console.log('inside orders api', decoded);
