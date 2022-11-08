@@ -16,11 +16,7 @@ console.log(process.env.DB_PASSWORD)
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.5bogalj.mongodb.net/?retryWrites=true&w=majority`;
 console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-    const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    client.close();
-});
+
 //estheticaDBUser
 //0Wqi9jJ8kcBGuZHP
 
@@ -45,76 +41,82 @@ client.connect(err => {
 
 // console.log(uri);
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// async function run() {
-//     try {
-//         const serviceCollection = client.db('geniusCar').collection('services');
-//         const orderCollection = client.db('geniusCar').collection('orders')
-//         app.post('/jwt', (req, res) => {
-//             const user = req.body;
-//             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' })
-//             res.send({ token })
-//         })
+async function run() {
+    try {
+        const serviceCollection = client.db('esthetica').collection('services');
+        // const orderCollection = client.db('geniusCar').collection('orders')
+        // app.post('/jwt', (req, res) => {
+        //     const user = req.body;
+        //     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' })
+        //     res.send({ token })
+        // })
 
 
 
-//         app.get('/services', async (req, res) => {
-//             const query = {}
-//             const cursor = serviceCollection.find(query)
-//             const services = await cursor.toArray();
-//             res.send(services);
-//         })
-//         app.get('/services/:id', async (req, res) => {
-//             const id = req.params.id;
-//             const query = { _id: ObjectId(id) };
-//             const service = await serviceCollection.findOne(query)
-//             res.send(service);
-//         })
-//         app.post('/orders', async (req, res) => {
-//             const order = req.body;
-//             const result = await orderCollection.insertOne(order);
-//             res.send(result);
-//         })
-//         app.get('/orders', verifyJWT, async (req, res) => {
-//             const decoded = req.decoded;
-//             console.log('inside orders api', decoded);
-//             if (decoded.email !== req.query.email) {
-//                 res.status(403).send({ message: 'unauthorized access' })
-//             }
-//             let query = {};
-//             if (req.query.email) {
-//                 query = {
-//                     email: req.query.email
-//                 }
-//             }
-//             const cursor = orderCollection.find(query);
-//             const orders = await cursor.toArray();
-//             res.send(orders);
-//         })
-//         app.delete('/orders/:id', async (req, res) => {
-//             const id = req.params.id;
-//             const query = { _id: ObjectId(id) }
-//             const result = await orderCollection.deleteOne(query)
-//             res.send(result)
-//         })
-//         app.patch('/orders/:id', async (req, res) => {
-//             const id = req.params.id;
-//             const status = req.body.status;
-//             const query = { _id: ObjectId(id) }
-//             const updatedDoc = {
-//                 $set: {
-//                     status: status
-//                 }
-//             }
-//             const result = await orderCollection.updateOne(query, updatedDoc)
-//             res.send(result);
-//         })
+        app.get('/service', async (req, res) => {
+            const query = {}
+            const cursor = serviceCollection.find(query).limit(3)
+            const services = await cursor.toArray();
+            res.send(services);
+        })
+        app.get('/services', async (req, res) => {
+            const query = {}
+            const cursor = serviceCollection.find(query)
+            const services = await cursor.toArray();
+            res.send(services);
+        })
+        // app.get('/services/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const service = await serviceCollection.findOne(query)
+        //     res.send(service);
+        // })
+        // app.post('/orders', async (req, res) => {
+        //     const order = req.body;
+        //     const result = await orderCollection.insertOne(order);
+        //     res.send(result);
+        // })
+        // app.get('/orders', verifyJWT, async (req, res) => {
+        //     const decoded = req.decoded;
+        //     console.log('inside orders api', decoded);
+        //     if (decoded.email !== req.query.email) {
+        //         res.status(403).send({ message: 'unauthorized access' })
+        //     }
+        //     let query = {};
+        //     if (req.query.email) {
+        //         query = {
+        //             email: req.query.email
+        //         }
+        //     }
+        //     const cursor = orderCollection.find(query);
+        //     const orders = await cursor.toArray();
+        //     res.send(orders);
+        // })
+        // app.delete('/orders/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) }
+        //     const result = await orderCollection.deleteOne(query)
+        //     res.send(result)
+        // })
+        // app.patch('/orders/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const status = req.body.status;
+        //     const query = { _id: ObjectId(id) }
+        //     const updatedDoc = {
+        //         $set: {
+        //             status: status
+        //         }
+        //     }
+        //     const result = await orderCollection.updateOne(query, updatedDoc)
+        //     res.send(result);
+        //})
 
-//     }
-//     finally {
+    }
+    finally {
 
-//     }
-// }
-// run().catch(err => console.error(err))
+    }
+}
+run().catch(err => console.error(err))
 
 
 app.get('/', (req, res) => {
