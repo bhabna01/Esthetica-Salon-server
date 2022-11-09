@@ -44,7 +44,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const serviceCollection = client.db('esthetica').collection('services');
-        // const orderCollection = client.db('geniusCar').collection('orders')
+        const reviewCollection = client.db('esthetica').collection('reviews')
         // app.post('/jwt', (req, res) => {
         //     const user = req.body;
         //     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' })
@@ -76,6 +76,14 @@ async function run() {
             const result = await serviceCollection.insertOne(service);
             res.send(result);
         })
+        app.post('/reviews', async (req, res) => {
+            const reviews = req.body;
+            const result = await reviewCollection.insertOne(reviews);
+            res.send(result);
+        })
+
+
+
         // app.get('/orders', verifyJWT, async (req, res) => {
         //     const decoded = req.decoded;
         //     console.log('inside orders api', decoded);
