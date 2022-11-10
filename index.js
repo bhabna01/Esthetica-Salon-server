@@ -17,30 +17,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-//estheticaDBUser
-//0Wqi9jJ8kcBGuZHP
 
-// const jwt = require('jsonwebtoken')
-// function verifyJWT(req, res, next) {
-//     const authHeader = req.headers.authorization
-//     if (!authHeader) {
-//         return res.status(401).send({ message: 'unauthorized access' })
-//     }
-//     const token = authHeader.split(' ')[1];
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
-//         if (err) {
-//             res.status(403).send({ message: 'forbidden access' })
-//         }
-//         req.decoded = decoded;
-//         next();
-//     })
-// }
-
-
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.5bogalj.mongodb.net/?retryWrites=true&w=majority`;
-
-// console.log(uri);
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run() {
     try {
         const serviceCollection = client.db('esthetica').collection('services');
@@ -143,18 +120,7 @@ async function run() {
             res.send(result);
 
         })
-        // app.patch('/orders/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const status = req.body.status;
-        //     const query = { _id: ObjectId(id) }
-        //     const updatedDoc = {
-        //         $set: {
-        //             status: status
-        //         }
-        //     }
-        //     const result = await orderCollection.updateOne(query, updatedDoc)
-        //     res.send(result);
-        //})
+
 
     }
     finally {
